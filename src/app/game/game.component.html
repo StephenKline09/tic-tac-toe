@@ -5,11 +5,11 @@
     <p class="current-status mat-display-2" style="color: white; font-size: 25px; text-align: center">Start the game on the button</p>
   </div>
 
-  <div class="field d-flex justify-content-center">
+  <div *ngIf="this.game.gameStatus === 0" class="field d-flex justify-content-center">
     <button (click)="startGame()" mat-raised-button color="accent" class="start-game-button">Start Game Now!</button>
   </div>
 
-  <div class="gameboard">
+  <div *ngIf="this.game.gameStatus === 1" class="gameboard">
 
     <div class="players player-one align-self-center">
       <p class="mat-body-1" style="font-weight: 500; margin: 0 0 10px 10px">Player 1</p>

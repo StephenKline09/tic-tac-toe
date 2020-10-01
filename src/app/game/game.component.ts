@@ -24,7 +24,32 @@ export class GameComponent implements OnInit {
   async clickSubfield( subfield: any): Promise<void> {
     if ( this.game.gameStatus === 1 ) {
       const position = subfield.currentTarget.getAttribute('position');
+      const information = document.querySelector('.current-status');
+
+      this.game.setField(position, this.game.currentTurn);
+      const color = this.game.getPlayerColorClass();
+      subfield.currentTarget.classList.add(color);
       console.log(position);
+
+
+      await this.game.checkGameEndWinner().then( (end: boolean) => {
+        if ( this .game.gameStatus === 0 && end ) {
+        information.innerHTML = "The winner is player " + this.game.currentTurn;
+        }
+      });
+
+      await this.game.checkGameEndFull().then( (end: boolean) => {
+        if ( this .game.gameStatus === 0 && end ) {
+        information.innerHTML = "It's a draw!";
+        }
+      });
+
+      this.game.changePlayer();
+
+      if (this.game.gameStatus === 1) {
+        const currentPlayer = 'Current turn: Player: ' + this.game.currentTurn;
+        information.innerHTML = currentPlayer;
+      }
     }
   }
 }
